@@ -49,6 +49,30 @@ class LinkedList {
     temp.prev = prev;
     prev.next = temp;
   }
+
+  void deleteValue(int data) {
+    if(head == null && tail == null) return;
+    if(head.data == data) {
+      head.next.prev = null;
+      head = head.next;
+      return;
+    }
+
+    LinkedNode temp = head;
+    while(temp != null && (temp.data != data)) temp = temp.next;
+
+    if(temp == null) return;
+    if(temp == tail) {
+      temp.prev.next = null;
+      temp.prev = null;
+      tail = tail.prev;
+      return;
+    }
+
+    temp.prev.next = temp.next;
+    temp.next.prev = temp.prev;
+    temp.next = temp.prev = null;
+  }
 }
 
 class Main {
@@ -64,6 +88,11 @@ class Main {
       System.out.print("Enter value at position " + (i+1) + ": ");
       l.insertSorted(sc.nextInt());
     }
+
+    l.display();
+
+    System.out.print("Enter element to delete: ");
+    l.deleteValue(sc.nextInt());
 
     l.display();
   }
